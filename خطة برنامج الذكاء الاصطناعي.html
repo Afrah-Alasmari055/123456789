@@ -1,0 +1,1630 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>خطة برنامج الذكاء الاصطناعي</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+/* ───────────────────────────────────────────
+   TOKENS
+─────────────────────────────────────────── */
+:root {
+  /* palette */
+  --c-teal-900: #083D45;
+  --c-teal-800: #0C5560;
+  --c-teal-700: #0D7C8C;
+  --c-teal-600: #1A96A8;
+  --c-teal-400: #4EC5D4;
+  --c-teal-100: #E0F5F7;
+  --c-teal-50:  #F0FAFB;
+  --c-gold-700: #9A6F00;
+  --c-gold-500: #C49B2F;
+  --c-gold-100: #FBF4E0;
+  --c-ink:      #0E1F22;
+  --c-ink-70:   #2D4B50;
+  --c-ink-40:   #6A8E94;
+  --c-ink-15:   #D4E5E8;
+  --c-ink-05:   #EEF5F6;
+  --c-surface:  #FFFFFF;
+  --c-bg:       #F3F9FA;
+
+  /* semantic */
+  --bg:         var(--c-bg);
+  --surface:    var(--c-surface);
+  --fg:         var(--c-ink);
+  --fg-mid:     var(--c-ink-70);
+  --fg-soft:    var(--c-ink-40);
+  --border:     var(--c-ink-15);
+  --accent:     var(--c-teal-700);
+  --accent-hi:  var(--c-teal-600);
+  --accent-low: var(--c-teal-100);
+  --gold:       var(--c-gold-500);
+  --gold-bg:    var(--c-gold-100);
+
+  /* radii */
+  --r2: 4px; --r4: 8px; --r6: 12px; --r8: 16px; --r10: 20px;
+
+  /* type */
+  --f-sans: 'Cairo', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', monospace;
+
+  /* shadows */
+  --sh-sm: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+  --sh-md: 0 4px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+  --sh-lg: 0 8px 24px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #0A1A1D;
+    --surface:   #0F2428;
+    --fg:        #E4F2F4;
+    --fg-mid:    #A8CDD2;
+    --fg-soft:   #5F8E95;
+    --border:    #1E3D43;
+    --accent:    var(--c-teal-400);
+    --accent-hi: var(--c-teal-600);
+    --accent-low:#0A2D32;
+    --gold:      var(--c-gold-500);
+    --gold-bg:   #1A1200;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #0A1A1D;
+  --surface:   #0F2428;
+  --fg:        #E4F2F4;
+  --fg-mid:    #A8CDD2;
+  --fg-soft:   #5F8E95;
+  --border:    #1E3D43;
+  --accent:    var(--c-teal-400);
+  --accent-hi: var(--c-teal-600);
+  --accent-low:#0A2D32;
+  --gold:      var(--c-gold-500);
+  --gold-bg:   #1A1200;
+  color-scheme: dark;
+}
+
+/* ───────────────────────────────────────────
+   RESET & BASE
+─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.65;
+  min-height: 100vh;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ───────────────────────────────────────────
+   LAYOUT SKELETON
+─────────────────────────────────────────── */
+.app {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* side-safe padding helper */
+.safe-x {
+  padding-inline: max(20px, env(safe-area-inset-left, 0px))
+                  max(20px, env(safe-area-inset-right, 0px));
+}
+
+/* ───────────────────────────────────────────
+   TOP NAV
+─────────────────────────────────────────── */
+.topnav {
+  background: var(--c-teal-900);
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-block: 0;
+  height: 60px;
+}
+.topnav .safe-x {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.topnav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.topnav-brand .chip {
+  width: 34px; height: 34px;
+  background: var(--c-teal-700);
+  border-radius: var(--r4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.topnav-brand h1 {
+  font-size: .88rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.topnav-brand .sub {
+  font-size: .68rem;
+  color: rgba(255,255,255,.55);
+  font-weight: 400;
+}
+
+.topnav-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+  height: 100%;
+}
+.topnav-tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  font-family: var(--f-sans);
+  font-size: .78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.55);
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2.5px solid transparent;
+  transition: color .15s, border-color .15s;
+  position: relative;
+}
+.tab-btn:hover { color: rgba(255,255,255,.85); }
+.tab-btn.active {
+  color: #fff;
+  border-bottom-color: var(--c-teal-400);
+}
+.tab-btn .tbadge {
+  background: rgba(255,255,255,.12);
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: .64rem;
+  font-weight: 700;
+  transition: background .15s;
+}
+.tab-btn.active .tbadge { background: var(--c-teal-700); }
+
+/* ───────────────────────────────────────────
+   HERO STRIP
+─────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--c-teal-800) 0%, var(--c-teal-700) 60%, var(--c-teal-600) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: .6;
+}
+.hero-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 20px 16px;
+  flex-wrap: wrap;
+}
+.hero-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hero-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: .73rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  backdrop-filter: blur(4px);
+}
+.hero-pill .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-teal-400);
+  flex-shrink: 0;
+}
+
+.stats-row {
+  display: flex;
+  gap: 1px;
+  background: rgba(255,255,255,.12);
+  border-radius: var(--r6);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 18px;
+  background: rgba(0,0,0,.12);
+  flex: 1;
+  min-width: 70px;
+}
+.stat-num {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: .64rem;
+  color: rgba(255,255,255,.65);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ───────────────────────────────────────────
+   PANELS (tab content)
+─────────────────────────────────────────── */
+.panels {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 28px max(16px, env(safe-area-inset-left, 0px)) 60px;
+  width: 100%;
+}
+
+.panel { display: none; animation: fadeUp .22s ease; }
+.panel.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ───────────────────────────────────────────
+   SECTION HEADINGS
+─────────────────────────────────────────── */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.sec-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.sec-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.sec-eyebrow {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ───────────────────────────────────────────
+   PHASE LABEL
+─────────────────────────────────────────── */
+.phase-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  margin-top: 32px;
+}
+.phase-row:first-of-type { margin-top: 0; }
+.phase-badge {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: #fff;
+  background: var(--accent);
+  border-radius: var(--r10);
+  padding: 4px 14px;
+  white-space: nowrap;
+}
+.phase-badge.p2 { background: var(--c-teal-600); }
+.phase-label {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--fg-mid);
+}
+.phase-rule { flex: 1; height: 1px; background: var(--border); }
+
+/* ───────────────────────────────────────────
+   SESSION CARDS
+─────────────────────────────────────────── */
+.sessions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 14px;
+}
+
+.sc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sh-sm);
+  transition: box-shadow .18s, transform .18s;
+}
+.sc:hover {
+  box-shadow: var(--sh-md);
+  transform: translateY(-2px);
+}
+
+.sc-top {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 0;
+}
+.sc-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  background: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: rgba(255,255,255,.45);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  transition: background .18s;
+}
+.sc.p2 .sc-num { background: var(--c-teal-600); }
+.sc-name {
+  padding: 0 12px;
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.35;
+}
+.sc-dur {
+  padding: 0 12px 0 0;
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--fg-soft);
+  font-family: var(--f-mono);
+  white-space: nowrap;
+}
+
+.sc-divider { height: 1px; background: var(--border); }
+
+.sc-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.sc-section-label {
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sc-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.sc-item-icon {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--accent-low);
+  border-radius: var(--r4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  margin-top: 1px;
+}
+.sc-item-body { min-width: 0; }
+.sc-item-title {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.3;
+}
+.sc-item-desc {
+  font-size: .73rem;
+  color: var(--fg-soft);
+  line-height: 1.55;
+  margin-top: 1px;
+}
+
+.sc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.tag {
+  font-size: .64rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 20px;
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+.tag-slide  { color: #0a5985; background: #e3f3fb; }
+.tag-print  { color: #7a5500; background: #fdf5d3; }
+.tag-card   { color: #1d6a40; background: #d8f3dc; }
+.tag-game   { color: #6b1f8a; background: #f3e5ff; }
+.tag-video  { color: #9d3e00; background: #fff0ea; }
+.tag-family { color: #5a3200; background: #fff4e0; }
+
+/* ───────────────────────────────────────────
+   DELIVERABLES GRID
+─────────────────────────────────────────── */
+.del-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.del-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  box-shadow: var(--sh-sm);
+  transition: box-shadow .18s;
+}
+.del-card:hover { box-shadow: var(--sh-md); }
+.del-icon {
+  width: 42px; height: 42px; flex-shrink: 0;
+  border-radius: var(--r4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.di-print  { background: #fdf5d3; }
+.di-slide  { background: #dff0fb; }
+.di-green  { background: #d8f3dc; }
+.di-orange { background: #fff0ea; }
+.del-info {}
+.del-name {
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.del-desc {
+  font-size: .73rem;
+  color: var(--fg-soft);
+  line-height: 1.6;
+}
+
+/* ───────────────────────────────────────────
+   EVAL
+─────────────────────────────────────────── */
+.eval-score-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.score-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--sh-sm);
+}
+.score-num {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.score-label { font-size: .78rem; font-weight: 700; color: var(--fg-mid); line-height: 1.4; }
+.score-total {
+  background: var(--accent);
+  border-radius: var(--r6);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.score-total .score-num { color: #fff; }
+.score-total .score-label { color: rgba(255,255,255,.8); }
+
+.rubric-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .78rem;
+  background: var(--surface);
+  border-radius: var(--r6);
+  overflow: hidden;
+  box-shadow: var(--sh-sm);
+  margin-bottom: 24px;
+}
+.rubric-table thead th {
+  background: var(--accent);
+  color: #fff;
+  padding: 11px 14px;
+  text-align: right;
+  font-weight: 700;
+  font-size: .75rem;
+  white-space: nowrap;
+}
+.rubric-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-soft);
+  vertical-align: middle;
+}
+.rubric-table tbody tr:last-child td { border-bottom: none; }
+.rubric-table tbody tr:nth-child(even) td { background: var(--accent-low); }
+.rubric-table .skill { color: var(--fg); font-weight: 700; }
+.rubric-table .skill small { display: block; font-weight: 400; color: var(--fg-soft); font-size: .68rem; margin-top: 2px; }
+.check-cell { text-align: center; }
+.check-box {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--r2);
+  background: var(--surface);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  vertical-align: middle;
+  position: relative;
+}
+.check-box.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.check-box.checked::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.portfolio-item {
+  background: var(--gold-bg);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r4);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .78rem;
+  color: var(--fg-mid);
+  cursor: pointer;
+  transition: background .15s;
+}
+.portfolio-item:hover { background: color-mix(in srgb, var(--gold-bg) 60%, var(--gold) 10%); }
+.portfolio-item .pi-box {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border: 2px solid var(--gold);
+  border-radius: 3px;
+  position: relative;
+  transition: background .15s;
+}
+.portfolio-item.done .pi-box {
+  background: var(--gold);
+}
+.portfolio-item.done .pi-box::after {
+  content: '✓';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 11px; font-weight: 700;
+}
+
+/* ───────────────────────────────────────────
+   TIMELINE
+─────────────────────────────────────────── */
+.tl {
+  position: relative;
+  padding-right: 24px;
+}
+.tl::before {
+  content: '';
+  position: absolute;
+  top: 20px; bottom: 0;
+  right: 7px;
+  width: 2px;
+  background: var(--border);
+}
+.tl-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 24px;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-node {
+  flex-shrink: 0;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+  margin-right: -8px; /* align to the pseudo-line */
+  position: relative;
+  z-index: 1;
+}
+.tl-node.gold { background: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+.tl-body {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  padding: 14px 16px;
+  box-shadow: var(--sh-sm);
+  min-width: 0;
+}
+.tl-week {
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.tl-week.gold { color: var(--gold); }
+.tl-title {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+.tl-detail {
+  font-size: .75rem;
+  color: var(--fg-soft);
+  line-height: 1.6;
+}
+.tl-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.tl-chip {
+  background: var(--accent-low);
+  color: var(--accent);
+  border-radius: var(--r10);
+  padding: 2px 10px;
+  font-size: .64rem;
+  font-weight: 700;
+}
+
+/* ───────────────────────────────────────────
+   TIPS
+─────────────────────────────────────────── */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.tip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: var(--sh-sm);
+}
+.tip-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--accent-low);
+  border-radius: var(--r4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.tip-title { font-size: .82rem; font-weight: 700; color: var(--fg); margin-bottom: 3px; }
+.tip-desc  { font-size: .73rem; color: var(--fg-soft); line-height: 1.6; }
+
+/* ───────────────────────────────────────────
+   OUTCOMES
+─────────────────────────────────────────── */
+.outcomes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+  counter-reset: outcome;
+}
+.outcome-item {
+  counter-increment: outcome;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  padding: 14px 16px 14px 48px;
+  position: relative;
+  font-size: .8rem;
+  color: var(--fg-mid);
+  line-height: 1.55;
+  box-shadow: var(--sh-sm);
+}
+.outcome-item::before {
+  content: counter(outcome, decimal-leading-zero);
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 38px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem;
+  font-weight: 800;
+  font-family: var(--f-mono);
+  color: #fff;
+  background: var(--accent);
+  border-radius: var(--r6) 0 0 var(--r6);
+  writing-mode: horizontal-tb;
+  letter-spacing: .02em;
+}
+
+/* ───────────────────────────────────────────
+   OVERVIEW STATS (panel: overview)
+─────────────────────────────────────────── */
+.ov-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.ov-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r6);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--sh-sm);
+  transition: box-shadow .18s, transform .18s;
+}
+.ov-card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); }
+.ov-ic {
+  width: 42px; height: 42px; flex-shrink: 0;
+  background: var(--accent-low);
+  border-radius: var(--r4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.ov-label { font-size: .66rem; font-weight: 700; color: var(--fg-soft); text-transform: uppercase; letter-spacing: .05em; }
+.ov-value { font-size: .9rem; font-weight: 800; color: var(--fg); line-height: 1.3; margin-top: 2px; }
+
+/* ───────────────────────────────────────────
+   FOOTER
+─────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding-block: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.footer .safe-x {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.footer-left { font-size: .72rem; color: var(--fg-soft); line-height: 1.6; }
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.theme-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--r4);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg-soft);
+  font-size: .85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.theme-btn:hover { background: var(--accent-low); color: var(--accent); }
+
+/* ───────────────────────────────────────────
+   RESPONSIVE
+─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .topnav-brand h1 { font-size: .78rem; }
+  .topnav-brand .sub { display: none; }
+  .hero-inner { flex-direction: column; align-items: flex-start; }
+  .stats-row { align-self: stretch; }
+  .eval-score-row { grid-template-columns: 1fr 1fr; }
+  .score-total { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc, .del-card, .ov-card, .sc:hover, .del-card:hover, .ov-card:hover {
+    transition: none; transform: none;
+  }
+  .panel { animation: none; }
+}
+</style>
+
+<div class="app">
+
+  <!-- ══ TOP NAV ══ -->
+  <nav class="topnav">
+    <div class="safe-x">
+      <div class="topnav-brand">
+        <div class="chip">🤖</div>
+        <div>
+          <h1>برنامج الذكاء الاصطناعي</h1>
+          <div class="sub">الصفوف الأولية · المدرسة الابتدائية الثانية بالقاعدة الجوية</div>
+        </div>
+      </div>
+      <div class="topnav-tabs">
+        <button class="tab-btn active" data-panel="overview">نظرة عامة</button>
+        <button class="tab-btn" data-panel="sessions">الحصص <span class="tbadge">10</span></button>
+        <button class="tab-btn" data-panel="deliverables">المخرجات <span class="tbadge">10</span></button>
+        <button class="tab-btn" data-panel="eval">التقويم</button>
+        <button class="tab-btn" data-panel="timeline">الجدول</button>
+        <button class="tab-btn" data-panel="tips">الإرشادات</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <div class="hero">
+    <div class="safe-x">
+      <div class="hero-inner">
+        <div class="hero-meta">
+          <span class="hero-pill"><span class="dot"></span>مجال العلوم والتقنية</span>
+          <span class="hero-pill"><span class="dot"></span>مرحلة الطفولة المبكرة 1448هـ</span>
+          <span class="hero-pill"><span class="dot"></span>رائدة النشاط: أفراح الأسمري</span>
+        </div>
+        <div class="stats-row">
+          <div class="stat-cell">
+            <div class="stat-num">10</div>
+            <div class="stat-label">حصص</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">450</div>
+            <div class="stat-label">دقيقة</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">9</div>
+            <div class="stat-label">نواتج</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">5</div>
+            <div class="stat-label">أسابيع</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PANELS ══ -->
+  <main class="panels">
+
+    <!-- ── OVERVIEW ── -->
+    <div class="panel active" id="panel-overview">
+      <div class="sec-eyebrow">نظرة عامة على البرنامج</div>
+      <div class="sec-head">
+        <div class="sec-title">معلومات البرنامج</div>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="ov-cards">
+        <div class="ov-card"><div class="ov-ic">📚</div><div><div class="ov-label">مجال البرنامج</div><div class="ov-value">العلوم والتقنية</div></div></div>
+        <div class="ov-card"><div class="ov-ic">🎓</div><div><div class="ov-label">المرحلة الدراسية</div><div class="ov-value">الصفوف 1 – 3</div></div></div>
+        <div class="ov-card"><div class="ov-ic">🎯</div><div><div class="ov-label">أسلوب التقويم</div><div class="ov-value">ملاحظة + ملف إنجاز</div></div></div>
+        <div class="ov-card"><div class="ov-ic">📺</div><div><div class="ov-label">وسيلة العرض</div><div class="ov-value">جهاز عرض + مطبوعات</div></div></div>
+        <div class="ov-card"><div class="ov-ic">🤝</div><div><div class="ov-label">الإشراف الأسري</div><div class="ov-value">مطلوب في 3 مهام</div></div></div>
+        <div class="ov-card"><div class="ov-ic">💎</div><div><div class="ov-label">القيم المستهدفة</div><div class="ov-value">التعاون · الأمانة · الوطنية</div></div></div>
+        <div class="ov-card"><div class="ov-ic">🔧</div><div><div class="ov-label">الأدوات البرمجية</div><div class="ov-value">ChatGPT · Gemini · DeepSeek</div></div></div>
+        <div class="ov-card"><div class="ov-ic">🏛️</div><div><div class="ov-label">مصدر البرنامج</div><div class="ov-value">المركز الوطني للمناهج</div></div></div>
+      </div>
+
+      <div class="sec-head">
+        <div class="sec-title">نواتج التعلم التسعة</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-item">معرفة المفاهيم الأساسية للذكاء الاصطناعي واستخداماته في الحياة اليومية</div>
+        <div class="outcome-item">التمييز بين التعليمات البرمجية التقليدية وأنماط الذكاء الاصطناعي المتبعة</div>
+        <div class="outcome-item">الربط بين ما يدركه البشر من حواس وكيفية معالجة الذكاء الاصطناعي للصور والأصوات</div>
+        <div class="outcome-item">استخدام أداة مبنية على الذكاء الاصطناعي مفيدة في الحياة اليومية</div>
+        <div class="outcome-item">تطبيق الخوارزميات البسيطة واستنتاج كيف يتصرف الذكاء الاصطناعي وفق معطيات محددة</div>
+        <div class="outcome-item">استخدام أدوات التقاط الصورة (الكاميرا) والصوت (المايكروفون)</div>
+        <div class="outcome-item">إدراك أهمية إشراف المعلم / الوالدين أثناء استخدام أدوات الذكاء الاصطناعي</div>
+        <div class="outcome-item">احترام مبادئ الاستخدام الآمن والأخلاقي للذكاء الاصطناعي</div>
+        <div class="outcome-item">تمييز الحقوق فيما يتعلق بخصوصية البيانات في أنظمة الذكاء الاصطناعي</div>
+      </div>
+    </div>
+
+    <!-- ── SESSIONS ── -->
+    <div class="panel" id="panel-sessions">
+
+      <!-- PHASE 1 -->
+      <div class="phase-row">
+        <span class="phase-badge">المرحلة الأولى</span>
+        <span class="phase-label">تقديم المفاهيم الأساسية بأنشطة الذكاء الاصطناعي · 5 حصص</span>
+        <div class="phase-rule"></div>
+      </div>
+
+      <div class="sessions">
+
+        <div class="sc">
+          <div class="sc-top">
+            <div class="sc-num">01</div>
+            <div class="sc-name">ما هو الذكاء الاصطناعي؟</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">محتوى الحصة</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🎬</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">فيديو تعريفي + عرض تقديمي</div>
+                <div class="sc-item-desc">أمثلة حياتية: السيارة الذكية، المساعد الصوتي، الروبوت — المفاهيم: الذكاء الاصطناعي، الخوارزمية، البرمجة</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">✏️</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">نشاط: أرسم روبوتي</div>
+                <div class="sc-item-desc">الطالبة ترسم روبوتاً وتكتب جملة واحدة عمّا يفعله — يُحفظ في ملف الإنجاز</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-slide">عرض تقديمي</span>
+              <span class="tag tag-video">فيديو</span>
+              <span class="tag tag-print">ورقة رسم</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc">
+          <div class="sc-top">
+            <div class="sc-num">02</div>
+            <div class="sc-name">هل سبق لكِ استخدام الذكاء الاصطناعي؟</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمة 1 — التطبيقات الواقعية</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🗣️</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">تجربة المساعد الصوتي (Siri)</div>
+                <div class="sc-item-desc">المعلمة تطرح أسئلة عبر الهاتف — الطالبات يُقيّمن دقة الإجابات ومدى فهم المساعد للهجتهن</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">💬</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">نقاش: هل يفهم الذكاء الاصطناعي جميع اللهجات؟</div>
+                <div class="sc-item-desc">أهمية تطوير النماذج العربية — نموذج «عَلَّام» السعودي</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-slide">عرض تقديمي</span>
+              <span class="tag tag-card">بطاقة نقاش</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc">
+          <div class="sc-top">
+            <div class="sc-num">03</div>
+            <div class="sc-name">من هذا؟ إنه الروبوت!</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمة 2 — التعرف على الروبوتات</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">📸</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">عرض صور روبوتات متنوعة</div>
+                <div class="sc-item-desc">روبوت التنظيف، التوصيل، الحراسة، المستشفيات — الطالبات يصفن وظيفة كل روبوت بطاقة مخصصة</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🎲</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">لعبة جسدية: الروبوت يمشي</div>
+                <div class="sc-item-desc">طالبة روبوت + طالبة مبرمجة — أوامر: تقدّم / توقف / أعطف يميناً / يساراً / تراجع</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-slide">عرض</span>
+              <span class="tag tag-game">لعبة جسدية</span>
+              <span class="tag tag-card">بطاقات وظائف</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc">
+          <div class="sc-top">
+            <div class="sc-num">04</div>
+            <div class="sc-name">رتّب الأوامر</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمة 5 — الخوارزمية التسلسلية</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🗺️</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">خريطة أوامر على الأرض أو لوح عرض</div>
+                <div class="sc-item-desc">الطالبات يرتّبن بطاقات الأوامر الصحيحة بالتسلسل لتوصيل الروبوت للهدف بأقل عدد خطوات</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🃏</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">بطاقات الأوامر المطبوعة</div>
+                <div class="sc-item-desc">تقدّم خطوة · انعطف يميناً · توقف · تقدّم خطوتين · تراجع · التقط</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-card">بطاقات أوامر</span>
+              <span class="tag tag-game">لعبة أرضية</span>
+              <span class="tag tag-print">ورقة مسار</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc">
+          <div class="sc-top">
+            <div class="sc-num">05</div>
+            <div class="sc-name">أنا الروبوت وأنتِ المبرمجة!</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمتان 6 و7 — التعاون والمسابقة</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">👯</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">نشاط تعاوني بالأزواج</div>
+                <div class="sc-item-desc">الأولى: روبوت — الثانية: مبرمجة. الوصول للصندوق بأقل خطوات، ثم التناوب</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🏁</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">مسابقة بناء الروبوت الورقي</div>
+                <div class="sc-item-desc">مجموعات تبني روبوتاً من الورق أو الكرتون — تسابق على المسار مع عقبات صوتية</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-game">مسابقة</span>
+              <span class="tag tag-card">بطاقات مهام</span>
+              <span class="tag tag-print">ورق كرتون</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="phase-row">
+        <span class="phase-badge p2">المرحلة الثانية</span>
+        <span class="phase-label">تطبيق مفاهيم الذكاء الاصطناعي عبر الأدوات الرقمية · 5 حصص</span>
+        <div class="phase-rule"></div>
+      </div>
+
+      <div class="sessions">
+
+        <div class="sc p2">
+          <div class="sc-top">
+            <div class="sc-num">06</div>
+            <div class="sc-name">هل الذكاء الاصطناعي ذكي حقاً؟</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمة 8 — حدود الذكاء الاصطناعي</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🐌</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">مثال خطأ تمييز الصور</div>
+                <div class="sc-item-desc">حلزون vs. سينامون رول — الطالبات يحددن الحالات التي أخطأ فيها الذكاء الاصطناعي</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🧠</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">لماذا يخطئ الذكاء الاصطناعي؟</div>
+                <div class="sc-item-desc">نقص البيانات · قلة التنوع في التدريب · الحاجة لبيانات أكثر وأطول</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-slide">عرض + صور</span>
+              <span class="tag tag-card">بطاقة نقاش</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc p2">
+          <div class="sc-top">
+            <div class="sc-num">07</div>
+            <div class="sc-name">أسرتي أيضاً تستخدم الذكاء الاصطناعي</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمة 9 — المشاركة الأسرية</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🏠</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">واجب بيتي مع أحد الوالدين</div>
+                <div class="sc-item-desc">استخدام ChatGPT / Gemini / DeepSeek لإنتاج: حلول أو أفكار أو صور أو فيديو قصير</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">📮</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">إرسال المنتج للمعلمة</div>
+                <div class="sc-item-desc">عبر الوسيلة التي يحددها المعلم — يُضاف للملف عند عرضه في الحصة</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-family">مشاركة أسرية</span>
+              <span class="tag tag-card">بطاقة توجيه</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc p2">
+          <div class="sc-top">
+            <div class="sc-num">08</div>
+            <div class="sc-name">وطني ذكي!</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">المهمة 10 — الذكاء الاصطناعي السعودي</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🇸🇦</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">جهود المملكة في الذكاء الاصطناعي</div>
+                <div class="sc-item-desc">سدايا · هيومين · تُوكنا · نموذج عَلَّام — بحث بإشراف الأسرة عن موضوع مختار</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🏆</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">حملة «السعودية أذكى»</div>
+                <div class="sc-item-desc">تعريف الطالبات بالبرامج الإثرائية الوطنية وتحفيزهن على المشاركة</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-slide">عرض</span>
+              <span class="tag tag-family">بحث أسري</span>
+              <span class="tag tag-print">ورقة بحث</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc p2">
+          <div class="sc-top">
+            <div class="sc-num">09</div>
+            <div class="sc-name">أماني وخصوصيتي</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">مهمة إضافية — الأمان والأخلاق</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🔐</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">قصة أو فيديو عن الخصوصية</div>
+                <div class="sc-item-desc">ما البيانات؟ لماذا نحمي معلوماتنا الشخصية؟ من يرى ما نكتبه؟</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🌐</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">البرامج الإثرائية الوطنية</div>
+                <div class="sc-item-desc">الطالبة تختار برنامجاً وتشارك بشهادة إتمامه مع المعلمة لاحقاً</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-video">فيديو</span>
+              <span class="tag tag-card">بطاقة أمان</span>
+              <span class="tag tag-print">ورقة تعهد</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sc p2">
+          <div class="sc-top">
+            <div class="sc-num">10</div>
+            <div class="sc-name">نختتم ونحتفل</div>
+            <div class="sc-dur">45 د</div>
+          </div>
+          <div class="sc-divider"></div>
+          <div class="sc-body">
+            <div class="sc-section-label">الحصة الختامية — ملف الإنجاز</div>
+            <div class="sc-item">
+              <div class="sc-item-icon">📁</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">مراجعة ملف الإنجاز</div>
+                <div class="sc-item-desc">الرسم · الجملة · بطاقات الأوامر · الواجب الأسري · حالات الخطأ · ورقة التعهد</div>
+              </div>
+            </div>
+            <div class="sc-item">
+              <div class="sc-item-icon">🎉</div>
+              <div class="sc-item-body">
+                <div class="sc-item-title">احتفالية ختامية</div>
+                <div class="sc-item-desc">عرض أعمال الطالبات، تكريم، توزيع شهادات، صور تذكارية جماعية</div>
+              </div>
+            </div>
+            <div class="sc-tags">
+              <span class="tag tag-print">ملف الإنجاز</span>
+              <span class="tag tag-card">شهادة تكريم</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── DELIVERABLES ── -->
+    <div class="panel" id="panel-deliverables">
+      <div class="sec-eyebrow">ما يجب تجهيزه قبل البدء</div>
+      <div class="sec-head">
+        <div class="sec-title">المواد والمخرجات — 10 بنود</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="del-grid">
+        <div class="del-card"><div class="del-icon di-print">🖨️</div><div class="del-info"><div class="del-name">بطاقات الأوامر</div><div class="del-desc">مجموعة بطاقات A5 ملوّنة: تقدّم · توقف · انعطف يميناً · يساراً · تقدّم خطوتين · تراجع · التقط — 1 مجموعة لكل فريق</div></div></div>
+        <div class="del-card"><div class="del-icon di-slide">📊</div><div class="del-info"><div class="del-name">عروض تقديمية (10 عروض)</div><div class="del-desc">عرض لكل حصة بالترتيب: مفاهيم مبسّطة، صور جذابة عالية الجودة، أسئلة نقاش مفتوحة — خط كبير للصفوف الأولية</div></div></div>
+        <div class="del-card"><div class="del-icon di-green">🃏</div><div class="del-info"><div class="del-name">بطاقات وظائف الروبوتات</div><div class="del-desc">بطاقة A4 لكل روبوت تحتوي: صورة واضحة + اسم الروبوت + وظيفته الرئيسية — للحصة الثالثة</div></div></div>
+        <div class="del-card"><div class="del-icon di-print">🗺️</div><div class="del-info"><div class="del-name">ورقة المسار (شبكة Grid)</div><div class="del-desc">خريطة A3 شبكية مع عقبات وهدف — للعبة ترتيب الأوامر في الحصة الرابعة. يمكن تكرارها بمستويات صعوبة مختلفة</div></div></div>
+        <div class="del-card"><div class="del-icon di-green">✏️</div><div class="del-info"><div class="del-name">ورقة «أرسم روبوتي»</div><div class="del-desc">ورقة موجّهة للطالبة: مساحة رسم حرة + سطر للجملة «روبوتي يستطيع أن...» — للحصة الأولى وملف الإنجاز</div></div></div>
+        <div class="del-card"><div class="del-icon di-green">👨‍👩‍👧</div><div class="del-info"><div class="del-name">بطاقة توجيه الأسرة</div><div class="del-desc">بطاقة تُرسل مع الطالبة للبيت: تعريف بالمهمة + روابط أدوات الذكاء الاصطناعي + تعليمات الأمان والإشراف</div></div></div>
+        <div class="del-card"><div class="del-icon di-print">🔐</div><div class="del-info"><div class="del-name">ورقة تعهد الأمان</div><div class="del-desc">مبادئ الاستخدام الآمن بأسلوب مصوّر مناسب للأطفال — الطالبة تضع بصمتها أو توقيعها بخط يدها</div></div></div>
+        <div class="del-card"><div class="del-icon di-green">📁</div><div class="del-info"><div class="del-name">غلاف ملف الإنجاز</div><div class="del-desc">غلاف مصمّم احترافياً باسم الطالبة والصف وصورتها — يُجمع داخله جميع مخرجاتها عبر الحصص العشر</div></div></div>
+        <div class="del-card"><div class="del-icon di-green">🏅</div><div class="del-info"><div class="del-name">شهادة الإتمام والتكريم</div><div class="del-desc">شهادة مصمّمة بألوان البرنامج واسم الطالبة — توزَّع في الحصة الختامية مع لحظة تكريمية</div></div></div>
+        <div class="del-card"><div class="del-icon di-orange">🎬</div><div class="del-info"><div class="del-name">فيديوهات قصيرة (3 فيديوهات)</div><div class="del-desc">فيديو تعريف بالذكاء الاصطناعي (2–3 د) + فيديو الروبوتات + فيديو الخصوصية والأمان — مناسبة للأطفال، عربية بالكامل</div></div></div>
+      </div>
+    </div>
+
+    <!-- ── EVAL ── -->
+    <div class="panel" id="panel-eval">
+      <div class="sec-eyebrow">نظام التقويم</div>
+      <div class="sec-head">
+        <div class="sec-title">أدوات التقويم والدرجات</div>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="eval-score-row">
+        <div class="score-block">
+          <div class="score-num">50</div>
+          <div class="score-label">درجة المشاركة<br>والتفاعل</div>
+        </div>
+        <div class="score-block">
+          <div class="score-num">50</div>
+          <div class="score-label">درجة المهام<br>الأدائية</div>
+        </div>
+        <div class="score-total">
+          <div class="score-num">100</div>
+          <div class="score-label">إجمالي<br>الدرجة</div>
+        </div>
+      </div>
+
+      <div class="sec-head" style="margin-top:4px;">
+        <div class="sec-title">بطاقة ملاحظة المهارات</div>
+        <div class="sec-line"></div>
+      </div>
+      <div style="overflow-x:auto; border-radius: var(--r6); box-shadow: var(--sh-sm); margin-bottom: 28px;">
+        <table class="rubric-table">
+          <thead>
+            <tr>
+              <th style="min-width:200px">المهارة المستهدفة</th>
+              <th class="check-cell">دائماً<br><span style="font-family:var(--f-mono); font-size:.7rem">(3)</span></th>
+              <th class="check-cell">أحياناً<br><span style="font-family:var(--f-mono); font-size:.7rem">(2)</span></th>
+              <th class="check-cell">نادراً<br><span style="font-family:var(--f-mono); font-size:.7rem">(1)</span></th>
+              <th class="check-cell">لا ينطبق<br><span style="font-family:var(--f-mono); font-size:.7rem">(0)</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="skill">التعاون مع الزملاء</span><small>قدرة الطالبة على العمل ضمن فريق والمساهمة بفاعلية</small></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+            </tr>
+            <tr>
+              <td><span class="skill">الإبداع والابتكار</span><small>مدى ابتكار الطالبة لأفكار أو حلول غير مألوفة</small></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+            </tr>
+            <tr>
+              <td><span class="skill">مهارات التواصل</span><small>مهارات التعبير الشفهي والكتابي أثناء النشاط</small></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+            </tr>
+            <tr>
+              <td><span class="skill">الالتزام بالمواعيد</span><small>احترام الجدول الزمني وتسليم الأعمال في وقتها</small></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+            </tr>
+            <tr>
+              <td><span class="skill">التفكير الناقد</span><small>قدرة الطالبة على تحليل المعلومات واتخاذ القرارات</small></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+              <td class="check-cell"><div class="check-box" onclick="this.classList.toggle('checked')"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sec-head">
+        <div class="sec-title">قائمة شطب ملف الإنجاز</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="portfolio-grid" id="portfolioGrid">
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>وصف المساعد الشخصي الذكي</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>رسم صورة روبوت</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>كتابة جملة «روبوتي يذهب إلى...»</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>تقديم وصف شفهي للروبوت</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>تنفيذ حركات الروبوت الورقي</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>تحديد حالات خطأ الذكاء الاصطناعي</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>استخدام أداة توليدية (مع الأسرة)</div>
+        <div class="portfolio-item" onclick="this.classList.toggle('done')"><div class="pi-box"></div>إيجاد نماذج وطنية للذكاء الاصطناعي</div>
+      </div>
+    </div>
+
+    <!-- ── TIMELINE ── -->
+    <div class="panel" id="panel-timeline">
+      <div class="sec-eyebrow">التوزيع الزمني المقترح</div>
+      <div class="sec-head">
+        <div class="sec-title">الجدول الزمني · 5 أسابيع / 10 حصص</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-node"></div>
+          <div class="tl-body">
+            <div class="tl-week">الأسبوع الأول</div>
+            <div class="tl-title">الحصتان 1 و2 — ما الذكاء الاصطناعي؟ + المساعد الصوتي</div>
+            <div class="tl-detail">المفاهيم الأساسية · خوارزمية الشطيرة · نشاط «أرسم روبوتي» · تجربة Siri · نقاش اللهجات ونموذج عَلَّام</div>
+            <div class="tl-chips">
+              <span class="tl-chip">مفاهيم أساسية</span>
+              <span class="tl-chip">نشاط رسم</span>
+              <span class="tl-chip">تجربة حية</span>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-node"></div>
+          <div class="tl-body">
+            <div class="tl-week">الأسبوع الثاني</div>
+            <div class="tl-title">الحصتان 3 و4 — الروبوتات + رتّب الأوامر</div>
+            <div class="tl-detail">لعبة الروبوت الجسدية · بطاقات وظائف الروبوتات · بطاقات الأوامر · خريطة المسار الشبكية</div>
+            <div class="tl-chips">
+              <span class="tl-chip">حركة جسدية</span>
+              <span class="tl-chip">خوارزمية تسلسلية</span>
+              <span class="tl-chip">بطاقات مطبوعة</span>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-node"></div>
+          <div class="tl-body">
+            <div class="tl-week">الأسبوع الثالث</div>
+            <div class="tl-title">الحصتان 5 و6 — التعاون + حدود الذكاء الاصطناعي</div>
+            <div class="tl-detail">مسابقة الروبوت الورقي · خطأ تمييز الصور (حلزون vs. سينامون) · نقاش: لماذا يخطئ الذكاء الاصطناعي؟</div>
+            <div class="tl-chips">
+              <span class="tl-chip">مسابقة جماعية</span>
+              <span class="tl-chip">تفكير ناقد</span>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-node"></div>
+          <div class="tl-body">
+            <div class="tl-week">الأسبوع الرابع</div>
+            <div class="tl-title">الحصتان 7 و8 — مشاركة الأسرة + وطني ذكي</div>
+            <div class="tl-detail">واجب بيتي مع الأسرة (أدوات توليدية) · سدايا وعَلَّام وهيومين · حملة «السعودية أذكى»</div>
+            <div class="tl-chips">
+              <span class="tl-chip">مشاركة أسرية</span>
+              <span class="tl-chip">ذكاء اصطناعي وطني</span>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-node gold"></div>
+          <div class="tl-body">
+            <div class="tl-week gold">الأسبوع الخامس — الختام</div>
+            <div class="tl-title">الحصتان 9 و10 — الأمان + الاحتفالية الختامية</div>
+            <div class="tl-detail">ورقة تعهد الأمان · فيديو الخصوصية · مراجعة ملف الإنجاز الكامل · توزيع الشهادات + صور تذكارية</div>
+            <div class="tl-chips">
+              <span class="tl-chip">خصوصية وأمان</span>
+              <span class="tl-chip">ملف الإنجاز</span>
+              <span class="tl-chip">احتفالية ختامية</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TIPS ── -->
+    <div class="panel" id="panel-tips">
+      <div class="sec-eyebrow">للتنفيذ الأمثل</div>
+      <div class="sec-head">
+        <div class="sec-title">إرشادات عامة للمعلمة</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="tips-grid">
+        <div class="tip"><div class="tip-icon">🗣️</div><div><div class="tip-title">استخدمي لغة بسيطة ومصوّرة</div><div class="tip-desc">تجنّبي المصطلحات المعقّدة — استبديليها دائماً بأمثلة من عالم الطفل: السيارة، الهاتف، الألعاب</div></div></div>
+        <div class="tip"><div class="tip-icon">🎨</div><div><div class="tip-title">شجّعي جميع أساليب التعبير</div><div class="tip-desc">كلام · رسم · حركة جسدية · تمثيل. الطالبة تختار الأسلوب الذي تشعر بالراحة فيه</div></div></div>
+        <div class="tip"><div class="tip-icon">🤝</div><div><div class="tip-title">الإشراف الأسري ركيزة أساسية</div><div class="tip-desc">أرسلي بطاقة توجيه واضحة للأسرة قبل كل مهمة بيتية، واذكري الأدوات المسموح بها والمدة الموصى بها</div></div></div>
+        <div class="tip"><div class="tip-icon">🎮</div><div><div class="tip-title">ادمجي الألعاب في كل حصة</div><div class="tip-desc">المسابقات والألعاب الجسدية تبني المهارة وتولّد الحماس — حاولي إدراج عنصر لعبة ولو بسيطاً في كل حصة</div></div></div>
+        <div class="tip"><div class="tip-icon">🔄</div><div><div class="tip-title">تبادل الأدوار إلزامي</div><div class="tip-desc">في لعبة الروبوت والمبرمجة تأكدي من أن كل طالبة تؤدي الدورين — لا طالبة تبقى روبوتاً طوال الوقت</div></div></div>
+        <div class="tip"><div class="tip-icon">📸</div><div><div class="tip-title">وثّقي بالصور والفيديو</div><div class="tip-desc">التقطي لقطات لكل نشاط لتوثيق ملف الإنجاز وإعداد تقرير البرنامج النهائي للإدارة</div></div></div>
+        <div class="tip"><div class="tip-icon">⚖️</div><div><div class="tip-title">الأمان أولاً دائماً</div><div class="tip-desc">ذكّري الطالبات في كل حصة تستخدم فيها تقنية رقمية بقاعدة «لا نشارك معلومات شخصية مع الذكاء الاصطناعي»</div></div></div>
+        <div class="tip"><div class="tip-icon">🏆</div><div><div class="tip-title">احتفلي بكل إنجاز صغير</div><div class="tip-desc">ختمة، نقطة، تصفيق، كلمة تشجيع — الطفل في هذا السن يستجيب بشكل كبير للتعزيز الإيجابي الفوري</div></div></div>
+      </div>
+
+      <div class="sec-head">
+        <div class="sec-title">أدوات التقنية المستخدمة</div>
+        <div class="sec-line"></div>
+      </div>
+      <div class="del-grid" style="margin-bottom:0">
+        <div class="del-card"><div class="del-icon di-slide" style="font-size:1rem; font-weight:700; color:#0a5985; font-family:var(--f-mono)">AI</div><div class="del-info"><div class="del-name">ChatGPT</div><div class="del-desc">للمهام الأسرية — توليد نصوص، أفكار، شرح مفاهيم بأسلوب مناسب للطفل — بإشراف الوالدين</div></div></div>
+        <div class="del-card"><div class="del-icon di-green" style="font-size:1rem; font-weight:700; color:#1d6a40; font-family:var(--f-mono)">AI</div><div class="del-info"><div class="del-name">Google Gemini</div><div class="del-desc">للمهام الأسرية — ميزة الصور والفيديو القصير — بإشراف الوالدين وباختيار الطالبة</div></div></div>
+        <div class="del-card"><div class="del-icon di-print" style="font-size:1rem; font-weight:700; color:#7a5500; font-family:var(--f-mono)">AI</div><div class="del-info"><div class="del-name">DeepSeek</div><div class="del-desc">خيار إضافي للمهام الأسرية — دعم أفضل للعربية — بإشراف الوالدين</div></div></div>
+        <div class="del-card"><div class="del-icon di-orange" style="font-size:.75rem; font-weight:700; color:#9d3e00; font-family:var(--f-mono)">Robo</div><div class="del-info"><div class="del-name">RoboMind Academy</div><div class="del-desc">منصة البرمجة الاختيارية — robotics.eu.robomind.home — تعمل بالعربية دون تسجيل. لتعزيز لعبة ترتيب الأوامر</div></div></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="safe-x">
+      <div class="footer-left">
+        برنامج الذكاء الاصطناعي · مجال العلوم والتقنية · مرحلة الطفولة المبكرة 1448هـ<br>
+        المركز الوطني للمناهج · وزارة التعليم · المملكة العربية السعودية
+      </div>
+      <div class="footer-right">
+        <button class="theme-btn" id="themeBtn" title="تبديل الوضع">🌙</button>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Tab switching ── */
+  const tabs   = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.panel;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById('panel-' + target);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  /* ── Theme toggle ── */
+  const btn  = document.getElementById('themeBtn');
+  const root = document.documentElement;
+
+  function getTheme() {
+    try { return localStorage.getItem('ai-plan-theme') || 'system'; } catch { return 'system'; }
+  }
+  function setTheme(t) {
+    try { localStorage.setItem('ai-plan-theme', t); } catch {}
+    if (t === 'dark')  { root.dataset.theme = 'dark';  btn.textContent = '☀️'; }
+    else if (t === 'light') { root.dataset.theme = 'light'; btn.textContent = '🌙'; }
+    else { delete root.dataset.theme; btn.textContent = window.matchMedia('(prefers-color-scheme: dark)').matches ? '☀️' : '🌙'; }
+  }
+
+  setTheme(getTheme());
+
+  btn.addEventListener('click', () => {
+    const cur = getTheme();
+    if (cur === 'system') {
+      setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark');
+    } else if (cur === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  });
+
+  /* ── Save checkbox states ── */
+  document.querySelectorAll('.check-box').forEach((box, i) => {
+    try {
+      if (localStorage.getItem('cb-' + i) === '1') box.classList.add('checked');
+    } catch {}
+    box.addEventListener('click', () => {
+      try { localStorage.setItem('cb-' + i, box.classList.contains('checked') ? '1' : '0'); } catch {}
+    });
+  });
+
+  document.querySelectorAll('.portfolio-item').forEach((item, i) => {
+    try {
+      if (localStorage.getItem('pi-' + i) === '1') item.classList.add('done');
+    } catch {}
+    item.addEventListener('click', () => {
+      try { localStorage.setItem('pi-' + i, item.classList.contains('done') ? '1' : '0'); } catch {}
+    });
+  });
+})();
+</script>
+
+</body></html>
